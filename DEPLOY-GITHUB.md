@@ -45,7 +45,7 @@ git push
    - **Runtime:** **Node**.
    - **Build Command:**
      ```bash
-     npm install && cd client && npm install && npm run build
+     npm install && cd client && npm install --include=dev && npm run build
      ```
    - **Start Command:**
      ```bash
