@@ -1,0 +1,15 @@
+/* Leads page – uses shared list styles from Customers.css */
+.page-title-icon {
+  margin-right: 0.5rem;
+  vertical-align: -0.2em;
+  color: #000000;
+}
+
+/* Lead status badges */
+.status-new { background-color: #e0e7ff; color: #3730a3; }
+.status-contacted { background-color: #dbeafe; color: #1e40af; }
+.status-qualified { background-color: #d1fae5; color: #065f46; }
+.status-proposal { background-color: #fef3c7; color: #92400e; }
+.status-negotiated { background-color: #fed7aa; color: #9a3412; }
+.status-won { background-color: #bbf7d0; color: #166534; }
+.status-lost { background-color: #fecaca; color: #991b1b; }

@@ -1,0 +1,424 @@
+.calls-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ===== Active Call Banner ===== */
+.active-call-banner {
+  background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+  color: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 16px rgba(4, 120, 87, 0.3);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.active-call-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.active-call-info strong {
+  font-size: 1.125rem;
+}
+
+.active-call-info span {
+  opacity: 0.85;
+  font-size: 0.875rem;
+  margin-left: 0.25rem;
+}
+
+.active-call-icon {
+  font-size: 1.75rem;
+}
+
+.active-call-icon.pulse {
+  animation: pulse 1.5s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+.call-timer {
+  margin-left: auto;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+}
+
+.active-call-notes textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  resize: vertical;
+  margin-bottom: 0.75rem;
+}
+
+.active-call-notes textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.active-call-notes textarea:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.active-call-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.active-call-actions .btn-success {
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s;
+}
+
+.active-call-actions .btn-success:hover {
+  background: #16a34a;
+}
+
+.active-call-actions .btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.active-call-actions .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ===== Calls Stats ===== */
+.calls-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.call-stat {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.call-stat:hover {
+  border-color: #000;
+}
+
+.call-stat-value {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #000;
+  line-height: 1.2;
+}
+
+.call-stat-label {
+  display: block;
+  font-size: 0.8125rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* ===== Table extras ===== */
+.call-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.call-contact strong {
+  font-weight: 600;
+  color: #000;
+}
+
+.call-contact-type {
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: capitalize;
+}
+
+.call-phone-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.call-phone-link:hover {
+  text-decoration: underline;
+}
+
+.call-direction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.call-direction.inbound {
+  color: #047857;
+  background: #ecfdf5;
+}
+
+.call-direction.outbound {
+  color: #1d4ed8;
+  background: #eff6ff;
+}
+
+.call-outcome {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.call-notes-cell {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #555;
+  font-size: 0.8125rem;
+}
+
+/* ===== Dialer Modal ===== */
+.dialer-modal {
+  max-width: 480px;
+}
+
+.dialer-body {
+  padding: 0.5rem 0;
+}
+
+.dialer-search-wrap {
+  position: relative;
+}
+
+.dialer-search-wrap input {
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2.25rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+}
+
+.dialer-search-wrap input:focus {
+  outline: none;
+  border-color: #000;
+}
+
+.dialer-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.contact-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 50;
+  margin-top: 4px;
+}
+
+.contact-result-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.contact-result-item:last-child {
+  border-bottom: none;
+}
+
+.contact-result-item:hover {
+  background: #f9fafb;
+}
+
+.contact-result-item strong {
+  display: block;
+  color: #000;
+}
+
+.contact-result-item span {
+  display: block;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.dialer-phone-input {
+  font-size: 1.25rem !important;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.dialer-call-btn {
+  width: 100%;
+  padding: 0.875rem !important;
+  font-size: 1.05rem !important;
+  justify-content: center;
+  margin-top: 0.5rem;
+  background: #047857 !important;
+}
+
+.dialer-call-btn:hover {
+  background: #065f46 !important;
+}
+
+.dialer-call-btn:disabled {
+  background: #e5e5e5 !important;
+  color: #aaa !important;
+  cursor: not-allowed;
+}
+
+/* ===== Call Detail ===== */
+.call-detail-body {
+  padding: 0.5rem 0;
+}
+
+.call-detail-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.9375rem;
+}
+
+.call-detail-row strong {
+  min-width: 100px;
+  color: #555;
+  font-weight: 500;
+}
+
+.call-detail-row a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.call-detail-row a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Modal Actions Row ===== */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e5e5;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ===== Loading State ===== */
+.page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  font-size: 1.125rem;
+  color: #888;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .calls-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .active-call-info {
+    flex-wrap: wrap;
+  }
+
+  .call-timer {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .active-call-actions {
+    flex-direction: column;
+  }
+
+  .active-call-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+}

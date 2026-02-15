@@ -1,0 +1,19 @@
+# Render Blueprint: Refined CRM
+# Deploy from GitHub: https://dashboard.render.com/select-repo?type=blueprint
+# After connecting the repo, add your custom domain and env vars in the dashboard.
+
+services:
+  - type: web
+    name: refined-crm
+    runtime: node
+    region: frankfurt
+    plan: free
+
+    buildCommand: npm install && cd client && npm install && npm run build
+    startCommand: node server/index.js
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Add all other vars in Render Dashboard → Environment (see DEPLOY-GITHUB.md)
+      # Required: APP_URL, JWT_SECRET, REACT_APP_API_URL, PUBLIC_URL, DB_USE_SQLITE, DB_PATH

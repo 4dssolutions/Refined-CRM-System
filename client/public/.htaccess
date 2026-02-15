@@ -1,0 +1,18 @@
+# Refined CRM - client-side routing (React Router)
+# Prevents 404 on refresh when app is served from Apache (e.g. cPanel).
+#
+# If the app is at the root of the domain (e.g. connect.refined-digital.co.za):
+#   Keep RewriteBase / and the rule below as-is.
+#
+# If the app is in a subfolder (e.g. connect.refined-digital.co.za/crm):
+#   Set RewriteBase /crm/
+#   Change the last RewriteRule to: RewriteRule . /crm/index.html [L]
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
