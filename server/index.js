@@ -49,7 +49,14 @@ if (hasBuild) {
       return res.status(404).type('text/plain').send('Static file not found. Check that the client build completed on deploy.');
     }
     res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
-    res.sendFile(path.join(buildPath, 'index.html'));
+    const indexPath = path.join(buildPath, 'index.html');
+    let html = fs.readFileSync(indexPath, 'utf8');
+    // Force visible background and banner so the page is never blank (handles cache/weird clients)
+    const forceVisible = '<script>(function(){var d=document;d.documentElement.style.background="#f5f5f5";d.body.style.background="#f5f5f5";d.body.style.minHeight="100vh";if(!d.body.querySelector("[data-server-banner]")){var b=d.createElement("div");b.setAttribute("data-server-banner","1");b.style.cssText="padding:10px 16px;background:#2563eb;color:white;font-family:sans-serif;font-size:14px";b.textContent="Refined CRM";d.body.insertBefore(b,d.body.firstChild);}})();</script>';
+    if (!html.includes('data-server-banner')) {
+      html = html.replace('</body>', forceVisible + '</body>');
+    }
+    res.type('html').send(html);
   });
 } else {
   if (process.env.NODE_ENV === 'production') {
