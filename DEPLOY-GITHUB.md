@@ -126,8 +126,12 @@ A sample workflow file can be added under `.github/workflows/deploy.yml` if you 
 
 ## Troubleshooting
 
+- **Blank white page:**  
+  1. **Runtime must be Node** — In Render → your service → Settings, ensure **Runtime** is **Node** (not Python or Static Site).  
+  2. **Build must run** — Build Command must be: `npm install && cd client && npm install --include=dev && npm run build` so that `client/build` exists. Check the **Logs** for the build step; if the client build fails, the server has nothing to serve.  
+  3. **Redeploy after env changes** — If you set or change `REACT_APP_API_URL` or `NODE_ENV`, trigger a **Manual Deploy** (Build cache cleared) so the React app is rebuilt with the new values.
 - **“Connection failed” or blank page:** Wait for the first build to finish (2–5 minutes). Then hard-refresh (Ctrl+F5) or open the site in a private window.
-- **API 404 or wrong URL:** Ensure `REACT_APP_API_URL` and `APP_URL` are exactly `https://connect.refined-digital.co.za/api` and `https://connect.refined-digital.co.za` (no trailing slash), and that you **redeployed** after changing them (they are baked into the client at build time).
+- **API 404 or wrong URL:** Ensure `REACT_APP_API_URL` and `APP_URL` match your **actual** live URL, e.g. `https://systems.refined-digital.co.za/api` and `https://systems.refined-digital.co.za` (no trailing slash), and that you **redeployed** after changing them (they are baked into the client at build time).
 - **Database errors:** On Render free tier with `DB_PATH=/tmp/...`, the DB is recreated on each deploy/restart. For persistent data, use a Render Disk (paid) or MySQL/PostgreSQL add-on and configure `DB_HOST`, `DB_USER`, etc. instead of SQLite.
 
 If you tell me which option you’re using (Render, Railway, or VPS), I can add a minimal GitHub Actions workflow for the VPS or tweak the Render/Railway steps for your exact repo and domain.
