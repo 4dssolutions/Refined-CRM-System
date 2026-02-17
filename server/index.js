@@ -42,20 +42,43 @@ app.use('/api', (req, res, next) => {
 app.use('/api', routes);
 
 // Serve React app when build folder exists (works even if NODE_ENV isn’t set on Render)
+app.get('/test', (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.type('html').send(
+    '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title></head><body style="margin:0;min-height:100vh;background:#f5f5f5;font-family:sans-serif;padding:2rem">' +
+    '<div style="padding:10px 16px;background:#2563eb;color:white;margin:-2rem -2rem 2rem -2rem">Refined CRM</div>' +
+    '<h1>Server is working</h1><p>If you see this, the server is reachable.</p>' +
+    '<p><a href="/?t=' + Date.now() + '">Open app (cache-bust)</a></p></body></html>'
+  );
+});
+
 if (hasBuild) {
   app.use(express.static(buildPath));
   app.get('*', (req, res, next) => {
     if (req.path.startsWith('/static/')) {
       return res.status(404).type('text/plain').send('Static file not found. Check that the client build completed on deploy.');
     }
-    res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
-    const indexPath = path.join(buildPath, 'index.html');
-    let html = fs.readFileSync(indexPath, 'utf8');
-    // Force visible background and banner so the page is never blank (handles cache/weird clients)
-    const forceVisible = '<script>(function(){var d=document;d.documentElement.style.background="#f5f5f5";d.body.style.background="#f5f5f5";d.body.style.minHeight="100vh";if(!d.body.querySelector("[data-server-banner]")){var b=d.createElement("div");b.setAttribute("data-server-banner","1");b.style.cssText="padding:10px 16px;background:#2563eb;color:white;font-family:sans-serif;font-size:14px";b.textContent="Refined CRM";d.body.insertBefore(b,d.body.firstChild);}})();</script>';
-    if (!html.includes('data-server-banner')) {
-      html = html.replace('</body>', forceVisible + '</body>');
-    }
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    let cssHref = './static/css/main.b600162f.css';
+    let jsSrc = './static/js/main.3cff4255.js';
+    try {
+      const manifestPath = path.join(buildPath, 'asset-manifest.json');
+      if (fs.existsSync(manifestPath)) {
+        const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+        if (manifest.entrypoints && manifest.entrypoints[0]) cssHref = manifest.entrypoints[0];
+        if (manifest.entrypoints && manifest.entrypoints[1]) jsSrc = manifest.entrypoints[1];
+      }
+    } catch (e) { }
+    const html = '<!doctype html><html lang="en"><head><meta charset="utf-8"/>' +
+      '<link rel="icon" href="/favicon.svg"/><meta name="viewport" content="width=device-width,initial-scale=1"/>' +
+      '<title>Refined CRM</title><link href="' + cssHref + '" rel="stylesheet"/></head>' +
+      '<body style="margin:0;min-height:100vh;background:#f5f5f5">' +
+      '<div style="padding:10px 16px;background:#2563eb;color:white;font-family:sans-serif;font-size:14px">Refined CRM</div>' +
+      '<noscript>You need to enable JavaScript to run this app.</noscript>' +
+      '<div id="root"><p style="font-family:sans-serif;padding:2rem;text-align:center">Loading…</p></div>' +
+      '<script src="' + jsSrc + '" defer></script></body></html>';
     res.type('html').send(html);
   });
 } else {
