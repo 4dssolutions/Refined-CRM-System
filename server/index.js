@@ -42,6 +42,11 @@ app.use('/api', (req, res, next) => {
 app.use('/api', routes);
 
 // Serve React app when build folder exists (works even if NODE_ENV isn’t set on Render)
+app.get('/ping', (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.type('text/plain').send('Refined CRM OK');
+});
+
 app.get('/test', (req, res) => {
   res.set('Cache-Control', 'no-store');
   res.type('html').send(
