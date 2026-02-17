@@ -44,7 +44,10 @@ app.use('/api', routes);
 // Serve React app when build folder exists (works even if NODE_ENV isn’t set on Render)
 if (hasBuild) {
   app.use(express.static(buildPath));
-  app.get('*', (req, res) => {
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/static/')) {
+      return res.status(404).type('text/plain').send('Static file not found. Check that the client build completed on deploy.');
+    }
     res.sendFile(path.join(buildPath, 'index.html'));
   });
 } else {

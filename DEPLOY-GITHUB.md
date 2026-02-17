@@ -43,9 +43,13 @@ git push
    - **Region:** Choose one close to your users (e.g. Frankfurt).
    - **Branch:** `main`.
    - **Runtime:** **Node**.
-   - **Build Command:**
+   - **Build Command:** (use the second line if the build runs out of memory on the free tier)
      ```bash
      npm install && cd client && npm install --include=dev && npm run build
+     ```
+     If the build fails or static files are missing, try:
+     ```bash
+     npm install && cd client && npm install --include=dev && NODE_OPTIONS=--max-old-space-size=4096 npm run build
      ```
    - **Start Command:**
      ```bash
