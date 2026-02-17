@@ -7,8 +7,13 @@ import { ErrorBoundary } from './ErrorBoundary';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
+    <div style={{ minHeight: '100vh', background: '#f5f5f5' }}>
+      <div style={{ padding: '8px 16px', background: '#2563eb', color: 'white', fontSize: '14px' }}>
+        Refined CRM
+      </div>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    </div>
   </React.StrictMode>
 );
