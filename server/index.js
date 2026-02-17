@@ -48,6 +48,7 @@ if (hasBuild) {
     if (req.path.startsWith('/static/')) {
       return res.status(404).type('text/plain').send('Static file not found. Check that the client build completed on deploy.');
     }
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
     res.sendFile(path.join(buildPath, 'index.html'));
   });
 } else {
