@@ -5,7 +5,8 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // When no token, show login immediately (loading false). When token exists, show loading until we validate or timeout.
+  const [loading, setLoading] = useState(() => typeof window !== 'undefined' && !!localStorage.getItem('token'));
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -13,6 +14,7 @@ export const AuthProvider = ({ children }) => {
     const fallback = setTimeout(() => setLoading(false), 8000);
     const clearFallback = () => clearTimeout(fallback);
     if (token) {
+      setLoading(true);
       getCurrentUser()
         .then((response) => {
           setUser(response.data);
