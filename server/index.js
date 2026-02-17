@@ -79,4 +79,12 @@ db.init()
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`React build: ${hasBuild ? 'found (will serve app)' : 'NOT FOUND (run: npm run build in client)'}`);
+  if (hasBuild) {
+    const staticDir = path.join(buildPath, 'static', 'js');
+    if (fs.existsSync(staticDir)) {
+      console.log('Static JS files:', fs.readdirSync(staticDir).join(', '));
+    } else {
+      console.warn('client/build/static/js not found – script requests may 404');
+    }
+  }
 });
