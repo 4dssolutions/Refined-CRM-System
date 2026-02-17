@@ -128,6 +128,37 @@ A sample workflow file can be added under `.github/workflows/deploy.yml` if you 
 
 ---
 
+## Workaround: "Static file not found" on Render (client build fails)
+
+If the **build** step on Render never produces `client/build/static/js/` (you see "Static file not found" when loading the app), you can **build the client locally** and **commit the build** so Render doesn’t need to run the client build:
+
+1. **Locally** (in the project root), set env and build:
+   ```bash
+   set REACT_APP_API_URL=https://refined-crm-system-1.onrender.com/api
+   set PUBLIC_URL=https://refined-crm-system-1.onrender.com
+   cd client && npm run build && cd ..
+   ```
+   (On Mac/Linux use `export` instead of `set`.)
+
+2. **Commit the build** (it’s normally in `.gitignore`):
+   ```bash
+   git add -f client/build
+   git commit -m "Add client build for Render deploy"
+   git push
+   ```
+
+3. **On Render** → your service → **Settings** → **Build & Deploy**, set **Build Command** to:
+   ```bash
+   npm install
+   ```
+   (No client build; the committed `client/build` is used.)
+
+4. **Manual Deploy** (with "Clear build cache" if available). The app should load.
+
+**Note:** Whenever you change the React app, run `npm run build` in `client/`, then `git add -f client/build`, commit, and push so the deployed site updates.
+
+---
+
 ## Troubleshooting
 
 - **Blank white page:**  
