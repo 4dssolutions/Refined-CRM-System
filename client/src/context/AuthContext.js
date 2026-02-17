@@ -9,6 +9,9 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    // Never block UI forever: stop loading after 8s if API is slow/hanging (e.g. free tier spin-up)
+    const fallback = setTimeout(() => setLoading(false), 8000);
+    const clearFallback = () => clearTimeout(fallback);
     if (token) {
       getCurrentUser()
         .then((response) => {
@@ -19,11 +22,14 @@ export const AuthProvider = ({ children }) => {
           localStorage.removeItem('user');
         })
         .finally(() => {
+          clearFallback();
           setLoading(false);
         });
     } else {
+      clearFallback();
       setLoading(false);
     }
+    return clearFallback;
   }, []);
 
   const login = (userData, token) => {
